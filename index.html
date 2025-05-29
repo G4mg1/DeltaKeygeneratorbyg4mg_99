@@ -3,40 +3,216 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DeltaKey Generator</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Zoul Whitlister</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #8B0000, #FF0000);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      background: rgba(0, 0, 0, 0.85);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 35px rgba(255, 0, 0, 0.9), 0 0 60px rgba(255, 50, 50, 0.7);
+      text-align: center;
+      width: 400px;
+      animation: glow 3s infinite alternate;
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 25px rgba(255, 0, 0, 0.5); }
+      to { box-shadow: 0 0 40px rgba(255, 80, 80, 1); }
+    }
+    .logo {
+      font-size: 2.2em;
+      font-weight: bold;
+      background: linear-gradient(to right, #FF4C4C, #8B0000);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .subtitle {
+      margin-bottom: 20px;
+      font-size: 1.2em;
+    }
+    .btn {
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background: #FF1E1E;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      position: relative;
+    }
+    .btn:hover {
+      background: #CC0000;
+    }
+    .btn:disabled {
+      background: #991111;
+      cursor: not-allowed;
+    }
+    .btn.loading::after {
+      content: '';
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 3px solid white;
+      border-top: 3px solid transparent;
+      border-radius: 50%;
+      width: 16px;
+      height: 16px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: translateY(-50%) rotate(0deg); }
+      100% { transform: translateY(-50%) rotate(360deg); }
+    }
+    .key-box {
+      background: #330000;
+      padding: 10px;
+      border-radius: 10px;
+      margin-top: 15px;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
+      opacity: 0;
+      transform: scale(0.9);
+      animation: popIn 0.5s ease forwards;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    @keyframes popIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    .hidden {
+      display: none;
+    }
+    #countdown {
+      margin-top: 10px;
+      font-size: 1.2em;
+    }
+    .copy-btn {
+      background: #FF4444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    .copy-btn:hover {
+      background: #CC3333;
+    }
+    .reload-msg {
+      font-size: 1em;
+      color: #FFAAAA;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container opening-animate">
-    <div class="dk-logo">
-      <svg width="54" height="54" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="4" y="4" width="46" height="46" rx="13" fill="#23232b"/>
-        <text x="13" y="38" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="bold" fill="#a78bfa">D</text>
-        <text x="28" y="38" font-family="Segoe UI, Arial, sans-serif" font-size="26" font-weight="bold" fill="#38bdf8">K</text>
-      </svg>
+  <div class="container">
+    <div class="logo">Zoul Whitlister</div>
+    <p class="subtitle">Click to get whitelisted</p>
+    <button id="generateKeyBtn" class="btn">Click to Generate Key</button>
+    <div id="keyDisplay" class="key-box hidden">
+      <span id="keyText"></span>
+      <button class="copy-btn" onclick="copyKey()">Copy</button>
     </div>
-    <h1>DeltaKey Generator</h1>
-    <button id="generate-btn" class="main-btn">
-      <span class="btn-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2V6" stroke="#18181b" stroke-width="2" stroke-linecap="round"/><path d="M12 18V22" stroke="#18181b" stroke-width="2" stroke-linecap="round"/><path d="M4.93 4.93L7.76 7.76" stroke="#18181b" stroke-width="2" stroke-linecap="round"/><path d="M16.24 16.24L19.07 19.07" stroke="#18181b" stroke-width="2" stroke-linecap="round"/><path d="M2 12H6" stroke="#18181b" stroke-width="2" stroke-linecap="round"/><path d="M18 12H22" stroke="#18181b" stroke-width="2" stroke-linecap="round"/><path d="M4.93 19.07L7.76 16.24" stroke="#18181b" stroke-width="2" stroke-linecap="round"/><path d="M16.24 7.76L19.07 4.93" stroke="#18181b" stroke-width="2" stroke-linecap="round"/></svg>
-      </span>
-      Click to get whitelisted
-    </button>
-    <div id="loading" class="loading hidden">
-      <div class="spinner"></div>
-      <span>Generating your key...</span>
-    </div>
-    <div id="keys-section" class="hidden">
-      <div id="keys-list"></div>
-      <button id="copy-btn" class="copy-btn">
-        <span class="btn-icon">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="9" width="13" height="13" rx="2" stroke="#18181b" stroke-width="2"/><rect x="2" y="2" width="13" height="13" rx="2" stroke="#18181b" stroke-width="2"/></svg>
-        </span>
-        Copy Key
-      </button>
-    </div>
+    <div id="countdown" class="hidden"></div>
+    <div id="reloadMsg" class="reload-msg hidden">Reload detected. Countdown resumed.</div>
   </div>
-  <div class="footer">&copy; 2025 DeltaKey<br><span class="credit">Website made by g4mg_99</span></div>
-  <script src="script.js"></script>
+
+  <script>
+    const generateKeyBtn = document.getElementById('generateKeyBtn');
+    const keyDisplay = document.getElementById('keyDisplay');
+    const keyText = document.getElementById('keyText');
+    const countdown = document.getElementById('countdown');
+    const reloadMsg = document.getElementById('reloadMsg');
+
+    let keyCooldown = false;
+    const cooldownHours = 24;
+    let timerInterval;
+
+    function copyKey() {
+      navigator.clipboard.writeText(keyText.textContent);
+      alert("Key copied to clipboard!");
+    }
+
+    function startCooldown(seconds) {
+      countdown.classList.remove('hidden');
+      localStorage.setItem('cooldownEnd', Date.now() + seconds * 1000);
+
+      function updateCountdown() {
+        const remaining = parseInt(localStorage.getItem('cooldownEnd')) - Date.now();
+
+        if (remaining <= 0) {
+          clearInterval(timerInterval);
+          localStorage.removeItem('cooldownEnd');
+          keyCooldown = false;
+          generateKeyBtn.disabled = false;
+          generateKeyBtn.classList.remove('loading');
+          countdown.classList.add('hidden');
+          keyDisplay.classList.add('hidden');
+          reloadMsg.classList.add('hidden');
+        } else {
+          const totalSec = Math.floor(remaining / 1000);
+          let h = Math.floor(totalSec / 3600);
+          let m = Math.floor((totalSec % 3600) / 60);
+          let s = totalSec % 60;
+          countdown.textContent = `You can generate again in ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+      }
+
+      updateCountdown();
+      timerInterval = setInterval(updateCountdown, 1000);
+    }
+
+    window.addEventListener('load', () => {
+      const cooldownEnd = localStorage.getItem('cooldownEnd');
+      if (cooldownEnd && parseInt(cooldownEnd) > Date.now()) {
+        keyCooldown = true;
+        generateKeyBtn.disabled = true;
+        generateKeyBtn.classList.add('loading');
+        reloadMsg.classList.remove('hidden');
+        startCooldown((parseInt(cooldownEnd) - Date.now()) / 1000);
+      }
+    });
+
+    generateKeyBtn.addEventListener('click', () => {
+      if (keyCooldown) return;
+
+      generateKeyBtn.classList.add('loading');
+      generateKeyBtn.disabled = true;
+
+      setTimeout(() => {
+        const key = 'ZoulFreekey-' + Math.random().toString(36).substring(2, 10);
+        keyText.textContent = key;
+        keyDisplay.classList.remove('hidden');
+        keyDisplay.classList.add('key-box');
+
+        keyCooldown = true;
+        startCooldown(cooldownHours * 60 * 60);
+      }, 1000);
+    });
+  </script>
 </body>
-</html> 
+</html>
