@@ -3,216 +3,186 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zoul Whitlister</title>
+  <title>Mirox AI — Stay Tuned</title>
   <style>
-    body {
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    * {
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #8B0000, #FF0000);
-      color: white;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
       overflow: hidden;
+      color: #fff;
+      animation: fadeIn 1.5s ease-in-out;
     }
+
+    /* Loader overlay */
+    .loader-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 10;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .loader {
+      width: 60px;
+      height: 60px;
+      border: 5px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 15px;
+    }
+
+    .loader-text {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
     .container {
-      background: rgba(0, 0, 0, 0.85);
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 0 35px rgba(255, 0, 0, 0.9), 0 0 60px rgba(255, 50, 50, 0.7);
+      position: relative;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 25px;
+      padding: 60px 80px;
       text-align: center;
-      width: 400px;
-      animation: glow 3s infinite alternate;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+      transform: translateY(20px);
+      opacity: 0;
+      animation: fadeUp 1.5s ease forwards 0.5s;
     }
-    @keyframes glow {
-      from { box-shadow: 0 0 25px rgba(255, 0, 0, 0.5); }
-      to { box-shadow: 0 0 40px rgba(255, 80, 80, 1); }
-    }
-    .logo {
-      font-size: 2.2em;
-      font-weight: bold;
-      background: linear-gradient(to right, #FF4C4C, #8B0000);
+
+    h1 {
+      font-size: 2.7rem;
+      margin-bottom: 15px;
+      background: linear-gradient(to right, #ff7eb3, #ff758c);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      animation: pulse 2s infinite;
     }
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 35px;
+      opacity: 0.9;
     }
-    .subtitle {
-      margin-bottom: 20px;
-      font-size: 1.2em;
-    }
+
     .btn {
-      padding: 12px;
+      background: linear-gradient(135deg, #ff4b2b, #ff416c);
       border: none;
-      border-radius: 10px;
-      background: #FF1E1E;
       color: white;
-      font-weight: bold;
+      padding: 15px 45px;
+      border-radius: 35px;
+      font-size: 1rem;
       cursor: pointer;
       transition: all 0.3s ease;
-      width: 100%;
-      position: relative;
+      box-shadow: 0 0 15px rgba(255, 107, 150, 0.4);
     }
+
     .btn:hover {
-      background: #CC0000;
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 107, 150, 0.7);
     }
-    .btn:disabled {
-      background: #991111;
-      cursor: not-allowed;
+
+    .btn:active {
+      transform: scale(0.97);
     }
-    .btn.loading::after {
-      content: '';
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    footer {
       position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      border: 3px solid white;
-      border-top: 3px solid transparent;
-      border-radius: 50%;
-      width: 16px;
-      height: 16px;
-      animation: spin 1s linear infinite;
+      bottom: 20px;
+      font-size: 0.9rem;
+      opacity: 0.6;
     }
-    @keyframes spin {
-      0% { transform: translateY(-50%) rotate(0deg); }
-      100% { transform: translateY(-50%) rotate(360deg); }
-    }
-    .key-box {
-      background: #330000;
-      padding: 10px;
-      border-radius: 10px;
-      margin-top: 15px;
-      font-weight: bold;
-      box-shadow: 0 0 15px rgba(255, 0, 0, 0.8);
-      opacity: 0;
-      transform: scale(0.9);
-      animation: popIn 0.5s ease forwards;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    @keyframes popIn {
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-    .hidden {
-      display: none;
-    }
-    #countdown {
-      margin-top: 10px;
-      font-size: 1.2em;
-    }
-    .copy-btn {
-      background: #FF4444;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      padding: 5px 10px;
-      margin-left: 10px;
-      cursor: pointer;
-    }
-    .copy-btn:hover {
-      background: #CC3333;
-    }
-    .reload-msg {
-      font-size: 1em;
-      color: #FFAAAA;
-      margin-top: 10px;
-    }
+
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">Zoul Whitlister</div>
-    <p class="subtitle">Click to get whitelisted</p>
-    <button id="generateKeyBtn" class="btn">Click to Generate Key</button>
-    <div id="keyDisplay" class="key-box hidden">
-      <span id="keyText"></span>
-      <button class="copy-btn" onclick="copyKey()">Copy</button>
-    </div>
-    <div id="countdown" class="hidden"></div>
-    <div id="reloadMsg" class="reload-msg hidden">Reload detected. Countdown resumed.</div>
+
+  <div class="loader-overlay" id="loaderOverlay">
+    <div class="loader"></div>
+    <div class="loader-text" id="loaderText">Checking tuned list...</div>
   </div>
 
+  <div class="container">
+    <h1>Stay Tuned</h1>
+    <p>Mirox AI might release soon 🚀</p>
+    <button class="btn" id="tuneButton" onclick="stayTuned()">Click to Stay Tuned</button>
+  </div>
+
+  <footer>© 2025 Mirox AI — The Future is Coming</footer>
+
   <script>
-    const generateKeyBtn = document.getElementById('generateKeyBtn');
-    const keyDisplay = document.getElementById('keyDisplay');
-    const keyText = document.getElementById('keyText');
-    const countdown = document.getElementById('countdown');
-    const reloadMsg = document.getElementById('reloadMsg');
+    const btn = document.getElementById('tuneButton');
+    const loader = document.getElementById('loaderOverlay');
+    const loaderText = document.getElementById('loaderText');
 
-    let keyCooldown = false;
-    const cooldownHours = 24;
-    let timerInterval;
-
-    function copyKey() {
-      navigator.clipboard.writeText(keyText.textContent);
-      alert("Key copied to clipboard!");
-    }
-
-    function startCooldown(seconds) {
-      countdown.classList.remove('hidden');
-      localStorage.setItem('cooldownEnd', Date.now() + seconds * 1000);
-
-      function updateCountdown() {
-        const remaining = parseInt(localStorage.getItem('cooldownEnd')) - Date.now();
-
-        if (remaining <= 0) {
-          clearInterval(timerInterval);
-          localStorage.removeItem('cooldownEnd');
-          keyCooldown = false;
-          generateKeyBtn.disabled = false;
-          generateKeyBtn.classList.remove('loading');
-          countdown.classList.add('hidden');
-          keyDisplay.classList.add('hidden');
-          reloadMsg.classList.add('hidden');
-        } else {
-          const totalSec = Math.floor(remaining / 1000);
-          let h = Math.floor(totalSec / 3600);
-          let m = Math.floor((totalSec % 3600) / 60);
-          let s = totalSec % 60;
-          countdown.textContent = `You can generate again in ${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
-        }
-      }
-
-      updateCountdown();
-      timerInterval = setInterval(updateCountdown, 1000);
-    }
-
+ 
     window.addEventListener('load', () => {
-      const cooldownEnd = localStorage.getItem('cooldownEnd');
-      if (cooldownEnd && parseInt(cooldownEnd) > Date.now()) {
-        keyCooldown = true;
-        generateKeyBtn.disabled = true;
-        generateKeyBtn.classList.add('loading');
-        reloadMsg.classList.remove('hidden');
-        startCooldown((parseInt(cooldownEnd) - Date.now()) / 1000);
-      }
-    });
-
-    generateKeyBtn.addEventListener('click', () => {
-      if (keyCooldown) return;
-
-      generateKeyBtn.classList.add('loading');
-      generateKeyBtn.disabled = true;
-
       setTimeout(() => {
-        const key = 'ZoulFreekey-' + Math.random().toString(36).substring(2, 10);
-        keyText.textContent = key;
-        keyDisplay.classList.remove('hidden');
-        keyDisplay.classList.add('key-box');
-
-        keyCooldown = true;
-        startCooldown(cooldownHours * 60 * 60);
-      }, 1000);
+        const isTuned = localStorage.getItem('miroxTuned');
+        if (isTuned === 'true') {
+          setTunedState();
+          loaderText.textContent = 'Already on the list ✅';
+        } else {
+          loaderText.textContent = 'You’re not tuned yet.';
+        }
+      
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          loader.style.transition = 'opacity 0.8s ease';
+          setTimeout(() => loader.style.display = 'none', 800);
+        }, 1200);
+      }, 1500);
     });
+
+    function stayTuned() {
+      localStorage.setItem('miroxTuned', 'true');
+      setTunedState();
+    }
+
+    function setTunedState() {
+      btn.textContent = 'You’re on the list! ✅';
+      btn.style.background = 'linear-gradient(135deg, #ff758c, #ff7eb3)';
+      btn.style.boxShadow = '0 0 25px rgba(255, 118, 157, 0.8)';
+      btn.disabled = true;
+    }
   </script>
 </body>
 </html>
